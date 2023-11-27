@@ -3,17 +3,17 @@ default: &default
   encoding: unicode
   pool: 5
   username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
-  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'password') %>
   host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
   port: <%= ENV.fetch('POSTGRES_PORT', '5432') %>
 
 development:
   <<: *default
-  database: rails_api_base_development
+  database: best-booking_development
 
 test:
   <<: *default
-  database: rails_api_base_test<%= ENV['TEST_ENV_NUMBER'] %>
+  database: best-booking_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 # For production is recommended to set DATABASE_URL env variable.
 # It will take precedence over the config defined here.

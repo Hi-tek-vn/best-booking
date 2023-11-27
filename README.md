@@ -1,33 +1,3 @@
-# Rails API Template
-
-[![Github Actions CI](https://github.com/rootstrap/rails_api_base/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/rootstrap/rails_api_base/actions)
-[![Code Climate](https://codeclimate.com/github/rootstrap/rails_api_base/badges/gpa.svg)](https://codeclimate.com/github/rootstrap/rails_api_base)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/63de7f82c79f5fe82f46/test_coverage)](https://codeclimate.com/github/rootstrap/rails_api_base/test_coverage)
-
-Rails Api Base is a boilerplate project for JSON RESTful APIs. It follows the community best practices in terms of standards, security and maintainability, integrating a variety of testing and code quality tools. It's based on Rails 7.0 and Ruby 3.2.
-
-Finally, it contains a plug an play Administration console (thanks to [ActiveAdmin](https://github.com/activeadmin/activeadmin)).
-
-## Features
-
-This template comes with:
-- Schema
-  - Users table
-  - Admin users table
-- Endpoints
-  - Sign up with user credentials
-  - Sign in with user credentials
-  - Sign out
-  - Reset password
-  - Get and update user profile
-- Administration panel for users
-- Feature flags support with a UI for management.
-- RSpec tests
-- Code quality tools
-- API documentation following https://www.openapis.org/
-- RSpec API Doc Generator
-- Docker support
-
 ## How to use
 
 1. Clone this repo
@@ -137,21 +107,3 @@ With `bundle exec rails code:analysis` you can run the code analysis tool, you c
 In order to use [New Relic](https://newrelic.com) to monitor your application requests and metrics, you must setup `NEW_RELIC_API_KEY` and `NEW_RELIC_APP_NAME` environment variables.
 To obtain an API key you must create an account in the platform.
 
-## Configuring Code Climate
-
-1. After adding the project to CC, go to `Repo Settings`
-1. On the `Test Coverage` tab, copy the `Test Reporter ID`
-1. Set the current value of `CC_TEST_REPORTER_ID` in the [circle-ci project env variables](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project)
-
-## Code Owners
-
-You can use [CODEOWNERS](https://help.github.com/en/articles/about-code-owners) file to define individuals or teams that are responsible for code in the repository.
-
-Code owners are automatically requested for review when someone opens a pull request that modifies code that they own.
-
-## Credits
-
-Rails Api Base is maintained by [Rootstrap](http://www.rootstrap.com) with the help of our
-[contributors](https://github.com/rootstrap/rails_api_base/contributors).
-
-[<img src="https://s3-us-west-1.amazonaws.com/rootstrap.com/img/rs.png" width="100"/>](http://www.rootstrap.com)
