@@ -1,0 +1,39 @@
+<div class="col-lg-6 offset-3">
+  <div class="p-5">
+    <div class="text-center">
+      <h1 class="h1 text-gray-900 mb-4">Sign In</h1>
+    </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-group">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "form-control form-control-user" ,
+          placeholder: "Enter Email Address" %>
+      </div>
+      <div class="form-group">
+        <%= f.password_field :password, autocomplete: "current-password" , class: "form-control form-control-user" ,
+          placeholder: "Password" %>
+      </div>
+      <div class="text-right">
+        <a class="small" href=<%=new_user_registration_path %>">Forgot Password?</a>
+      </div>
+      <div class="form-group">
+        <% if devise_mapping.rememberable? %>
+          <div class="custom-control custom-checkbox small">
+            <input type="checkbox" class="custom-control-input" id="customCheck">
+            <label class="custom-control-label" for="customCheck">Remember Me</label>
+          </div>
+          <% end %>
+      </div>
+      <p class="small text-center">By proceeding you also agree to the Terms of Service and Privacy Policy</p>
+      <button type="submit" class="btn btn-primary btn-user btn-block">
+        Login
+      </button>
+    <% end %>
+    <hr>
+    <div class="text-center">
+      <span class="font-weight-bold">
+        Don't have an account?
+        <a href="<%= new_user_registration_path %>">Sign Up</a>
+      </span>
+    </div>
+  </div>
+</div>

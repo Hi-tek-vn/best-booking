@@ -1,0 +1,21 @@
+<div class="p-4">
+  <h2 class="font-weight-bold mb-4">Trending Cases</h2>
+  <section style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap overflow-auto" style="gap: 2vw">
+      <% @newest_cases.each do |_case| %>
+        <%= render partial: "case", locals: { _case: _case} %>
+      <% end %>
+    </div>
+  </section>
+</div>
+
+<div class="p-4">
+  <h2 class="font-weight-bold mb-4">Newest Cases</h2>
+  <section style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap overflow-auto" style="gap: 2vw">
+      <% @trending_cases.each do |_case| %>
+        <%= render partial: "case", locals: { _case: _case} %>
+      <% end %>
+    </div>
+  </section>
+</div>

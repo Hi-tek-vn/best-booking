@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_04_182448) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_12_044200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,70 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_182448) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "case_finances", force: :cascade do |t|
+    t.integer "case_id"
+    t.float "current_share_price"
+    t.string "curency"
+    t.float "day_high"
+    t.float "day_low"
+    t.float "alltime_high"
+    t.float "alltime_low"
+    t.float "payout_share_pc"
+    t.float "total_fund_required"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cases", force: :cascade do |t|
+    t.integer "case_type"
+    t.integer "case_relation"
+    t.string "short_description"
+    t.string "case_description"
+    t.float "claim_sum", default: 0.0
+    t.float "total_funds", default: 0.0
+    t.integer "case_status"
+    t.integer "case_duration"
+    t.boolean "know_defendant"
+    t.boolean "know_jurisdiction"
+    t.boolean "previous_judgement"
+    t.boolean "legal_strategy"
+    t.boolean "signed_contract"
+    t.integer "risk_level"
+    t.integer "plaintiff_payout"
+    t.integer "investor_payout"
+    t.integer "lix_payout"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_cases_on_author_id"
+  end
+
+  create_table "cases_categories", id: false, force: :cascade do |t|
+    t.bigint "case_id", null: false
+    t.bigint "category_id", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_overview", default: false
+    t.boolean "is_navbar", default: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "currencies", force: :cascade do |t|
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "delayed_jobs", id: :serial, force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -92,12 +156,49 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_182448) do
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
+  create_table "payment_types", force: :cascade do |t|
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "payment_type"
+    t.string "account_name"
+    t.string "card_number"
+    t.integer "ccv"
+    t.datetime "expiry_date", precision: nil
+    t.string "account_number"
+    t.string "bitcoin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "role_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string "key", null: false
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_settings_on_key", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "case_id"
+    t.float "number_of_share"
+    t.float "total_amount"
+    t.float "transactions_fee"
+    t.string "currency"
+    t.string "paid_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -119,10 +220,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_182448) do
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.json "tokens"
+    t.text "phone", default: ""
+    t.string "user_type"
+    t.boolean "investor_income_response", default: false
+    t.boolean "investor_net_worth_response", default: false
+    t.boolean "investor_executive_response", default: false
+    t.boolean "investor_business_development_response", default: false
+    t.boolean "case_owner_behalf", default: false
+    t.string "case_owner_address"
+    t.string "case_owner_employment_status"
+    t.string "case_owner_passport"
+    t.string "case_owner_dob"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cases", "users", column: "author_id"
 end

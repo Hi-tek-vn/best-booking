@@ -8,11 +8,11 @@ Rails.application.routes.draw do
       mount Flipper::UI.app(Flipper) => '/feature-flags'
     end
   end
-  mount_devise_token_auth_for 'User', at: '/api/v1/users', controllers: {
-    registrations: 'api/v1/registrations',
-    sessions: 'api/v1/sessions',
-    passwords: 'api/v1/passwords'
-  }
+  # mount_devise_token_auth_for 'User', at: '/api/v1/users', controllers: {
+  #   registrations: 'api/v1/registrations',
+  #   sessions: 'api/v1/sessions',
+  #   passwords: 'api/v1/passwords'
+  # }
 
   namespace :api do
     namespace :v1, defaults: { format: :json } do
@@ -26,6 +26,15 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  devise_for :users, path: 'users'
+  devise_scope :user do  
+    get '/users/sign_out' => 'devise/sessions#destroy'     
+  end
+  root "home#index"
+  resources :users
+  resources :cases, only: [:new, :create, :show, :index]
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 end

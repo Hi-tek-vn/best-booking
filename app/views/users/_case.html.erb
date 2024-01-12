@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-6">
+    <h5><%= _case.case_type.titleize %>: <%= _case.short_description %></h5>
+    <div class="d-flex flex-row justify-content-start mb-3">
+      <button class="btn btn-secondary mx-1"><span class="small">Status: <%= _case.case_status.titleize %></span></button>
+      <button class="btn btn-secondary mx-1"><span class="small">Risk: <%= _case&.risk_level %></span></button>
+      <button class="btn btn-secondary mx-1"><span class="small">Duration: <%= _case.case_duration %></span></button>
+    </div>
+    <p>CASE ID: <%= _case.id %></p>
+    <p>TOTAL CLAIM VALUE: US <%= number_to_currency(_case.claim_sum, unit: "$", precision: 0) %></p>
+    <p>INVESTOR SHARE: <%= _case&.investor_payout %></p>
+    <p>TOTAL FUNDS REQUIRED: <%= number_to_currency(_case.total_funds, unit: "$", precision: 0) %></p>
+  </div>
+  <div class="col-md-3 my-auto">
+    <% @percentage_data = { "Funds" => (_case.total_funds.to_f / _case.claim_sum.to_f) * 100, "" => 100 - (_case.total_funds.to_f / _case.claim_sum.to_f), } %>
+    <%= pie_chart @percentage_data, donut: true, legend: false %>
+  </div>
+  <div class="col-md-3 text-right my-auto">
+    <button class="btn btn-primary">Update</button>
+  </div>
+</div>
+<hr>

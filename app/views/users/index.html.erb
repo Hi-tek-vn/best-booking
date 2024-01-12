@@ -1,0 +1,40 @@
+<div class="card my-4">
+  <% if current_user %>
+  <ul class="nav nav-tabs custom-tabs" role="tablist">
+    <li class="nav-item py-2">
+      <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><i class="fa fa-list mr-4"></i>My Cases</a>
+    </li>
+    <li class="nav-item py-2">
+      <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><i class="fa fa-archive mr-4"></i>Draft</a>
+    </li>
+    <button class="btn btn-primary position-absolute right-1 top-1" style="right: 1%; top: 1%;" data-toggle="modal"   data-target="#caseFormModal">
+      <i class="fa fa-plus-square"></i>
+    </button>
+  </ul><!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+      <div class="p-4">
+        
+          <% @cases.each do |_case| %>
+            <%= render partial: "case", locals: {_case: _case} %>
+          <% end %>
+
+          <% if @cases.count == 0 %>
+            <div class="text-center">
+              No data
+            </div>
+          <% end %>
+          <%= render 'form_modal' %>
+        
+      </div>
+    </div>
+    <div class="tab-pane" id="tabs-2" role="tabpanel">
+      <div class="p-4">
+        Second Panel
+      </div>
+    </div>
+  </div>
+  <% else %>
+    <%= render "get_started" %>
+  <% end %>
+</div>

@@ -1,0 +1,58 @@
+<div class="modal fade" id="caseFormModal" tabindex="-1" role="dialog" aria-labelledby="caseFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center font-weight-bold" id="caseFormModalLabel">List New Case</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: Case.new, url: cases_path, method: :post, class: "px-5", id: "caseForm", multipart: true, remote: true) do |form| %>
+          <div id="errorMessages" class="row"></div>
+          <div id="page1">
+            <%= render 'cases/form', form: form %>
+          </div>
+
+          <div id="page2" style="display: none;">
+            <%= render 'payouts_and_terms', form: form %>
+          </div>
+          <%= form.submit 'Create Case', class: 'btn btn-success', id: 'submitBtn' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("caseForm");
+    const errorMessages = document.getElementById("errorMessages");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById("caseFormModal").classList.remove("show");
+          document.getElementsByClassName("modal-backdrop")[0].classList.remove("show");
+        } else {
+          errorMessages.innerHTML = `<div class="alert alert-danger col-12">${data.message}</div>`;
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    });
+  });
+</script>

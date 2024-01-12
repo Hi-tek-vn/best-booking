@@ -1,0 +1,85 @@
+<% attributes = [
+  { questions: "1) Do you know the Defendant?", attribute: :know_defendant, label: 'Know Defendant' },
+  { questions: "2) Do you know jurisdiction of crime?", attribute: :know_jurisdiction, label: 'Know Jurisdiction' },
+  { questions: "3) Has there been a previous judgement in the plantiff's favour?", attribute: :previous_judgement, label: 'Previous Judgement' },
+  { questions: "4) Has the legal strategy been identified?", attribute: :legal_strategy, label: 'Legal Strategy' },
+  { questions: "5) Is there a contract that was signed?", attribute: :signed_contract, label: 'Signed Contract' }
+] %>
+
+<div class="row my-4">
+  <%= form.label :case_type, class: 'col-sm-4 col-form-label' %>
+  <%= form.select :case_type, options_for_select(Case.case_types.map { |key, value| [key.humanize, key] }), {}, class: 'form-control -sm-4' %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :case_relation, "Relation to Case", class: 'col-sm-4 col-form-label' %>
+  <%= form.select :case_relation, options_for_select(Case.case_relations.keys.map { |key, value| [key.humanize, key] }), {}, class: 'form-control col-sm-4' %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :short_description, class: 'col-sm-4 col-form-label' %>
+  <%= form.text_field :short_description, class: 'form-control col-sm-4', required: true %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :case_description, class: 'col-sm-12 col-form-label' %>
+  <%= form.text_area :case_description, class: 'form-control mx-2', required: true %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :supporting_file, "Upload Supporting Files (Proof of Relation, Case Document)", class: 'col-sm-12 col-form-label' %>
+  <%= form.file_field :supporting_file, class: 'form-control mx-2' %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :claim_sum, class: 'col-form-label col-sm-6' %>
+  <%= form.label :total_funds, "Total Funds Required", class: 'col-form-label col-sm-6' %>
+</div>
+
+<div class="row my-4">
+  <div class="col-sm-6">
+    <%= form.text_field :claim_sum, class: 'form-control col-sm-9', required: true %>
+  </div>
+  <div class="col-sm-6">
+    <%= form.text_field :total_funds, class: 'form-control col-sm-9', required: true %>
+  </div>
+</div>
+
+<div class="row my-4">
+  <%= form.label :case_status, class: 'col-sm-4 col-form-label' %>
+  <%= form.select :case_status, options_for_select(Case.case_statuses.keys.map { |key, value| [key.humanize, key] }), {}, class: 'form-control col-sm-4' %>
+</div>
+
+<div class="row my-4">
+  <%= form.label :case_duration, class: 'col-sm-4 col-form-label' %>
+  <%= form.text_field :case_duration, class: 'form-control col-sm-4' %>
+</div>
+
+<% attributes.each do |attr| %>
+  <div class="form-group row">
+    <%= form.label attr[:questions], class: 'col-sm-8 col-form-label' %>
+    <div class="col-sm-2">
+      <div class="form-check form-check-inline">
+        <%= form.radio_button attr[:attribute], true, class: 'form-check-input', id: "#{attr[:attribute]}_true" %>
+        <%= form.label "#{attr[:attribute]}_true", 'Yes', class: 'form-check-label', for: "#{attr[:attribute]}_true" %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-check form-check-inline">
+        <%= form.radio_button attr[:attribute], false, class: 'form-check-input', id: "#{attr[:attribute]}_false", checked: true %>
+        <%= form.label "#{attr[:attribute]}_false", 'No', class: 'form-check-label', for: "#{attr[:attribute]}_false" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="text-center">
+  <span class="h4 font-weight-bold">Risk Level</span>
+  <span class="h4 text-primary mx-5 font-weight-bold">N/A</span>
+</div>
+
+<%= form.hidden_field :author_id, value: current_user.id %>
+
+<div class="text-center my-5">
+  <button type="button" class="btn btn-primary" id="nextPageBtn">Next <i class="fa fa-arrow-right ml-3"></i></button>
+</div>

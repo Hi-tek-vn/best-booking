@@ -1,0 +1,146 @@
+<div class="col-lg-12">
+  <div class="p-5">
+    <div class="text-center">
+      <h1 class="h1 text-gray-900 mb-4">Sign Up</h1>
+    </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      
+      <section>
+        <div class="row">
+          <h5 class="col-3 font-weight-bold">User Type</h5>
+          <div class="col-9">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :user_type, "investor", class: "form-check-input", checked: true %>
+              <%= f.label :investor, class: "form-check-label", for: "user_user_type_investor" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :user_type, "case_owner", class: "form-check-input" %>
+              <%= f.label :case_owner, class: "form-check-label", for: "user_user_type_case_owner" %>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="my-4">
+        <h5 class="my-4 font-weight-bold">Personal Information</h5>
+        <div class="row">
+          <div class="form-group row col-12">
+            <label class="col-sm-3" for="email">Email Address</label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-user col-sm-9", placeholder: "Your email" %>
+          </div>
+          <div class="form-group row col-12">
+            <label class="col-sm-3" for="phone">Phone Number</label>
+            <%= f.text_field :phone, autocomplete: "phone-number", class: "form-control form-control-user col-sm-9", placeholder: "Your Phone Number" %>
+          </div>
+          <div class="form-group row col-12">
+            <label class="col-sm-3" for="email">Password</label>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-user col-sm-9", placeholder: "Password" %>
+          </div>
+          <div class="form-group row col-12">
+            <label class="col-sm-3" for="email">Password Confirmation</label>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-user col-sm-9", placeholder: "Confirm Password" %>
+          </div>
+          <div class="form-group row col-12">
+            <label class="col-sm-3" for="email">Name</label>
+            <%= f.text_field :first_name, autocomplete: "name", class: "form-control form-control-user col-sm-9", placeholder: "Your Name" %>
+          </div>
+        </div>
+      </section>
+
+      <section class="my-4" id="investor_section">
+        <h5 class="my-4 font-weight-bold">Accredited Investor Verification</h5>
+        <div class="row my-4">
+          <span class="col-sm-9">Is your annual income over $200,000 USD for the past two years and do you expect to earn the same this year?</span>
+          <div class="col-sm-3 text-center">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_income_response, false, class: "form-check-input" %>
+              <%= f.label :no, class: "form-check-label", for: "investor_income_response_false" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_income_response, true, class: "form-check-input", checked: true %>
+              <%= f.label :yes, class: "form-check-label", for: "investor_income_response_true" %>
+            </div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <span class="col-sm-9">Is your net worth exceeding $1 Million excluding your primary residence?</span>
+          <div class="col-sm-3 text-center">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_net_worth_response, false, class: "form-check-input" %>
+              <%= f.label :no, class: "form-check-label", for: "investor_net_worth_response_false" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_net_worth_response, true, class: "form-check-input", checked: true %>
+              <%= f.label :yes, class: "form-check-label", for: "investor_net_worth_response_true" %>
+            </div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <span class="col-sm-9">Are you a general partner, executive officer, or director for a company that is issuing the unregistered securities?</span>
+          <div class="col-sm-3 text-center">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_executive_response, false, class: "form-check-input" %>
+              <%= f.label :no, class: "form-check-label", for: "investor_executive_response_false" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_executive_response, true, class: "form-check-input", checked: true %>
+              <%= f.label :yes, class: "form-check-label", for: "investor_executive_response_true" %>
+            </div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <span class="col-sm-9">Are you a private business development company or an organization with assets exceeding $5 Million?</span>
+          <div class="col-sm-3 text-center">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_business_development_response, false, class: "form-check-input" %>
+              <%= f.label :no, class: "form-check-label", for: "investor_business_development_response_false" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :investor_business_development_response, true, class: "form-check-input", checked: true %>
+              <%= f.label :yes, class: "form-check-label", for: "investor_business_development_response_true" %>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="my-4" id="case_owner_section">
+        <h5 class="my-4 font-weight-bold">Accredited Investor Verification</h5>
+        <div class="row my-4">
+          <span class="col-sm-6">Are you listing this case on behalf of someone else?</span>
+          <div class="col-sm-6 text-center">
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :case_owner_behalf, false, class: "form-check-input", checked: true %>
+              <%= f.label :no, class: "form-check-label", for: "case_owner_behalf_false" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :case_owner_behalf, true, class: "form-check-input" %>
+              <%= f.label :yes, class: "form-check-label", for: "case_owner_behalf_true" %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row col-12">
+          <label class="col-sm-7" for="email">Address</label>
+          <%= f.text_field :case_owner_address, autocomplete: "address", class: "form-control form-control-user col-sm-5", placeholder: "Address" %>
+        </div>
+        <div class="form-group row col-12">
+          <label class="col-sm-7" for="email">Employer/Company/Unemployed</label>
+          <%= f.select :employment_status, User.employment_statuses.keys.map { |status| [status.capitalize, status] }, {}, class: "form-control form-control-user col-sm-5" %>
+        </div>
+        <div class="form-group row col-12">
+          <label class="col-sm-7" for="email">Passport No.</label>
+          <%= f.text_field :case_owner_passport, autocomplete: "passport", class: "form-control form-control-user col-sm-5", placeholder: "Passport" %>
+        </div>
+        <div class="form-group row col-12">
+          <label class="col-sm-7" for="email">Date of birth</label>
+          <%#= f.date_field :case_owner_dob, min: 0.days.ago, class: "form-control form-control-user col-sm-5" %>
+        </div>
+
+      </section>
+
+      <button type="submit" class="btn btn-primary btn-user btn-block">
+        Sign Up
+      </button>
+    <% end %>
+  </div>
+</div>
