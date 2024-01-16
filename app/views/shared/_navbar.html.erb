@@ -74,8 +74,8 @@
               </li>
               <li class="nav-item mr-1 " id="bacicTab3-4">
                 <a class="d-flex align-items-center nav-link font-weight-bold 
-                <%= 'text-dark' if @active_tab != 'index' || 
-                                   @active_tab != 'new_case' ||
+                <%= 'text-dark' if @active_tab != 'index' && 
+                                   @active_tab != 'new_case' &&
                                    @active_tab != 'trading_case' %>" href="<%= users_path %>">My Profile</a>
               </li>
           </ul>
