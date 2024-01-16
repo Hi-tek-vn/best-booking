@@ -29,9 +29,11 @@ Rails.application.routes.draw do
 
   devise_for :users, path: 'users'
   devise_scope :user do  
-    get '/users/sign_out' => 'devise/sessions#destroy'     
+    get '/users/sign_out' => 'devise/sessions#destroy'
   end
   root "home#index"
+  get 'newcase' => 'home#new_case'
+  get 'tradingcase' => 'home#trading_case'
   resources :users
   resources :cases, only: [:new, :create, :show, :index]
 

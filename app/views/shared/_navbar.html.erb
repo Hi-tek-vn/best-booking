@@ -64,16 +64,19 @@
        <div class="body p-0 position-relative">
           <ul class="nav nav-tabs-new2" role="tablist">
               <li class="nav-item mr-1 " id="bacicTab3-1">
-                <a class="d-flex align-items-center nav-link font-weight-bold active text-dark" href="/">Overview</a>
+                <a class="d-flex align-items-center nav-link font-weight-bold <%= 'text-dark' if @active_tab == 'index' %>" href="/">Overview</a>
               </li>
               <li class="nav-item mr-1 " id="bacicTab3-2">
-                <a class="d-flex align-items-center nav-link font-weight-bold " href="/newcase">New Case</a>
+                <a class="d-flex align-items-center nav-link font-weight-bold <%= 'text-dark' if @active_tab == 'new_case' %>" href="/newcase">New Case</a>
               </li>
-              <li class="nav-item mr-1 active" id="bacicTab3-3">
-                <a class="d-flex align-items-center nav-link font-weight-bold " href="/tradingcase">Trading Case</a>
+              <li class="nav-item mr-1" id="bacicTab3-3">
+                <a class="d-flex align-items-center nav-link font-weight-bold <%= 'text-dark' if @active_tab == 'trading_case' %>" href="/tradingcase">Trading Case</a>
               </li>
               <li class="nav-item mr-1 " id="bacicTab3-4">
-                <a class="d-flex align-items-center nav-link font-weight-bold " href="<%= users_path %>">My Profile</a>
+                <a class="d-flex align-items-center nav-link font-weight-bold 
+                <%= 'text-dark' if @active_tab != 'index' || 
+                                   @active_tab != 'new_case' ||
+                                   @active_tab != 'trading_case' %>" href="<%= users_path %>">My Profile</a>
               </li>
           </ul>
        </div>
