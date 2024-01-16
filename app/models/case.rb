@@ -97,6 +97,8 @@ class Case < ApplicationRecord
     other_status: 9
   }
 
+  after_create :update_system_calculation_and_payout
+
   validates :case_type, :case_relation, :case_status, presence: true
   validates :short_description, presence: true, length: { minimum: 1, maximum: 255 }
   validates :case_description, presence: true
@@ -108,5 +110,34 @@ class Case < ApplicationRecord
   def ransackable_associations(auth_object = nil)
     Rails.logger.info("WITHIN RANSACK ASSOCIATION")
     super + %w[supporting_file]
+  end
+
+  def update_system_calculation_and_payout
+    risk_level = calculate_risk_value
+    set_payout_percentages(risk_level)
+    save
+  end
+
+  private
+
+  def calculate_risk_value
+    [
+      know_defendant,
+      know_jurisdiction,
+      previous_judgement,
+      legal_strategy,
+      signed_contract
+    ].count(true)
+  end
+
+  def set_payout_percentages(risk_count)
+    case risk_count
+    when 0, 1
+      update_columns(investor_payout: 40, plaintiff_payout: 50, lix_payout: 10, risk_level: risk_count)
+    when 2, 3
+      update_columns(investor_payout: 30, plaintiff_payout: 60, lix_payout: 10, risk_level: risk_count)
+    when 4, 5
+      update_columns(investor_payout: 20, plaintiff_payout: 70, lix_payout: 10, risk_level: risk_count)
+    end
   end
 end

@@ -11327,3 +11327,15 @@
 .custom-tabs .nav-link:hover{
   color: rgb(73, 197, 182);
 }
+
+.bg-purple {
+  background: #9769c0;
+}
+
+.bg-dark-blue {
+  background: #8e94ce;
+}
+
+.bg-dark-primary {
+  background: #5cb3c9;
+}

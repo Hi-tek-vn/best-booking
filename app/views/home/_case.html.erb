@@ -8,9 +8,15 @@
     <%= pie_chart @percentage_data, donut: true, legend: false %>
     <p>Price per Share: <%= number_to_currency(_case.investor_payout || 0, unit: "$", precision: 0) %> </p>
     <div class="d-flex flex-row justify-content-center">
-      <button class="btn btn-secondary mx-1"><span class="small">Status: <%= _case.case_status.titleize %></span></button>
-      <button class="btn btn-secondary mx-1"><span class="small">Risk: <%= _case&.risk_level %></span></button>
-      <button class="btn btn-secondary mx-1"><span class="small">Duration: <%= _case.case_duration %></span></button>
+      <div class="w-25 mx-1">
+        <div class="progress h-100 position-relative">
+          <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: <%= calculate_percentage_by_status(_case.case_status) %>%;">
+          <span class="title position-absolute text-dark font-weight-bold" style="left: 0; right: 0"><%= _case.case_status.titleize %></span>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-secondary mx-1 bg-dark-blue"><span class="small">Risk: <%= format_risk(_case&.risk_level) %></span></button>
+      <button class="btn btn-secondary mx-1 bg-dark-primary"><span class="small">Duration: <%= format_duration(_case.case_duration) %></span></button>
     </div>
   </div>
 </div>

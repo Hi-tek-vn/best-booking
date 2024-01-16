@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
+  include HomeHelper
+
   skip_after_action :verify_policy_scoped
   before_action :set_active_tab
 
